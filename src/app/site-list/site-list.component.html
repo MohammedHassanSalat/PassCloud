@@ -1,8 +1,7 @@
-<div class="container mx-auto my-16">
+<section class="container mx-auto my-16">
   <!-- header -->
   <h1 class="text-5xl mt-5 mb-5">Welocme To Your Password Manager</h1>
   <p class="mb-5 text-2xl">Your secure way to save and manage all your passwords!</p>
-  <button class="bg-gray-900 text-white shadow-md px-5 py-3 rounded-xl">Add New Website</button>
 
   @if (isSuccess) {
   <div class="mt-5 shadow-md px-5 py-3 rounded-xl bg-green-200 text-green-900">
@@ -17,24 +16,25 @@
     <form [formGroup]="siteForm" (ngSubmit)="onSubmit()">
       <div class="flex flex-col mt-2">
         <label for="siteName" class="text-lg">Website Name</label>
-        <input [(ngModel)]="siteName" type="text" name="siteName" formControlName="siteName" class="border-2 border-gray-700 rounded-xl w-full p-2">
+        <input type="text" name="siteName" formControlName="siteName" class="border-2 border-gray-700 rounded-xl w-full p-2">
       </div>
       <div class="flex flex-col mt-2">
         <label for="siteURL" class="text-lg">Website URL</label>
-        <input [(ngModel)]="siteURL" type="text" name="siteURL" formControlName="siteURL" class="border-2 border-gray-700 rounded-xl w-full p-2">
+        <input type="text" name="siteURL" formControlName="siteURL" class="border-2 border-gray-700 rounded-xl w-full p-2">
       </div>
       <div class="flex flex-col mt-2">
         <label for="siteImageURL" class="text-lg">Website Image URL</label>
-        <input [(ngModel)]="siteImageURL" type="text" name="siteImageURL" formControlName="siteImageURL" class="border-2 border-gray-700 rounded-xl w-full p-2">
+        <input type="text" name="siteImageURL" formControlName="siteImageURL" class="border-2 border-gray-700 rounded-xl w-full p-2">
       </div>
       <button type="submit" class="bg-gray-900 text-white shadow-md px-5 py-3 rounded-xl mt-5 mr-2">{{formState}} Website</button>
-      <button class="bg-white text-gray-900 border-2 border-gray-700 shadow-md px-5 py-3 rounded-xl mt-5">Cancel</button>
+      <button type="button" (click)="resetForm()" class="bg-white text-gray-900 border-2 border-gray-700 shadow-md px-5 py-3 rounded-xl mt-5">Cancel</button>
     </form>
   </div>
 
+  <h2 class="text-5xl mt-5 mb-5">Your Websites</h2>
   <!-- site list -->
   <div class="grid grid-cols-3 gap-5 max-sm:grid-cols-1 max-md:grid-cols-2">
-    @for (site of siteList | async; track $index) {
+    @for (site of siteList; track $index) {
       <!-- site card -->
       <div class="border-2 border-gray-700 rounded-xl shadow-lg mt-10 overflow-hidden">
         <img class="w-full"
@@ -42,15 +42,14 @@
         <div class="p-5">
           <p class="text-xl font-bold"> {{site.siteName}} </p>
           <div class="w-fit bg-blue-200 text-blue-800 rounded-lg px-2 mt-3">{{site.siteURL}}</div>
-          <button class="bg-gray-900 text-white shadow-md px-5 py-3 rounded-xl mt-5 mr-2">Add New Password</button>
-          <button (click)="onEdit(site.siteName,site.siteURL,site.siteImageURL,site.id)"
+          <button class="bg-gray-900 text-white shadow-md px-5 py-3 rounded-xl mt-5 mr-2" routerLink="/password-list"
+          [queryParams]="{id: site.id, Name: site.siteName, url: site.siteURL, ImageURL: site.siteImageURL}">Add New Password</button>
+          <button (click)="onUpdate(site.siteName,site.siteURL,site.siteImageURL,site.id)"
             class="bg-white text-gray-900 border-2 border-gray-700 shadow-md px-4 py-3 rounded-xl mt-5 mr-2">Update</button>
-          <button (click)="deleteSite(site.id)"
+          <button (click)="onDelete(site.id)"
             class="bg-white text-gray-900 border-2 border-gray-700 shadow-md px-5 py-3 rounded-xl mt-5">Delete</button>
         </div>
       </div>
     }
   </div>
-
-
-</div>
+</section>

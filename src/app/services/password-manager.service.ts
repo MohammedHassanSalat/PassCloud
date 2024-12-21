@@ -1,5 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, addDoc, collectionData, doc, updateDoc, deleteDoc } from '@angular/fire/firestore';
+import {
+  Firestore,
+  collection,
+  addDoc,
+  collectionData,
+  doc,
+  updateDoc,
+  deleteDoc,
+} from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -7,27 +15,67 @@ import { Firestore, collection, addDoc, collectionData, doc, updateDoc, deleteDo
 export class PasswordManagerService {
   constructor(private firestore: Firestore) {}
 
-  // add a website to the database
+  // Add a new website to the database.
+  // @returns Promise<void> so the rest of the methods but getAllSites
   addSite(data: object) {
-    const dbInstance = collection(this.firestore, 'sites');
-    return addDoc(dbInstance, data);
+    const siteCollection = collection(this.firestore, 'sites');
+    return addDoc(siteCollection, data);
   }
 
-  // get all website from the database
+  // Retrieve all websites from the database.
+  // @returns Observable containing the list of sites
   getAllSites() {
-    const dbInstance = collection(this.firestore, 'sites');
-    return collectionData(dbInstance, { idField: 'id' });
+    const siteCollection = collection(this.firestore, 'sites');
+    return collectionData(siteCollection, { idField: 'id' });
   }
 
-  // update site
-  updateSite(id: string, data: object) {
-    const docInstance = doc(this.firestore, 'sites', id);
-    return updateDoc(docInstance, data);
+  // Update a website in the database.
+  updateSite(siteId: string, data: object) {
+    const siteDoc = doc(this.firestore, 'sites', siteId);
+    return updateDoc(siteDoc, data);
   }
 
-  // delete site
-  deleteSite(id: string) {
-    const docInstance = doc(this.firestore, 'sites', id);
-    return deleteDoc(docInstance)
+  // Delete a website from the database.
+  deleteSite(siteId: string) {
+    const siteDoc = doc(this.firestore, 'sites', siteId);
+    return deleteDoc(siteDoc);
+  }
+
+  // Add a new password to a specific website.
+  addPassword(data: object, siteId: string) {
+    const passwordCollection = collection(
+      this.firestore,
+      `sites/${siteId}/passwords`
+    );
+    return addDoc(passwordCollection, data);
+  }
+
+  // Retrieve all passwords for a specific website.
+  getAllPasswords(siteId: string) {
+    const passwordCollection = collection(
+      this.firestore,
+      `sites/${siteId}/passwords`
+    );
+    return collectionData(passwordCollection, { idField: 'id' });
+  }
+
+  // Update a password for a specific website.
+  updatePassword(siteId: string, passwordId: string, data: object) {
+    const passwordDoc = doc(
+      this.firestore,
+      `sites/${siteId}/passwords`,
+      passwordId
+    );
+    return updateDoc(passwordDoc, data);
+  }
+
+  // Delete a password from a specific website.
+  deletePassword(siteId: string, passwordId: string) {
+    const passwordDoc = doc(
+      this.firestore,
+      `sites/${siteId}/passwords`,
+      passwordId
+    );
+    return deleteDoc(passwordDoc);
   }
 }
