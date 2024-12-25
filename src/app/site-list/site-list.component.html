@@ -1,8 +1,8 @@
 <div class="p-1 min-w-full dark:bg-gray-900 dark:text-white">
   <section class="container mx-auto my-16">
     <!-- header -->
-    <h1 class="text-5xl mt-5 mb-5 dark:text-white">Welcome To Your Password Manager</h1>
-    <p class="mb-5 text-2xl dark:text-gray-400">Your secure way to save and manage all your passwords!</p>
+    <h1 class="text-5xl mt-5 mb-5 dark:text-white">Securely Save Your Websites Here!</h1>
+    <p class="mb-5 text-2xl dark:text-gray-400">You Can Add New Websites From This Form</p>
 
     @if (isSuccess) {
     <div class="mt-5 shadow-md px-5 py-3 rounded-xl bg-green-200 text-green-900 dark:bg-green-900 dark:text-green-300">
@@ -13,7 +13,6 @@
     <!-- Add site form -->
     <div class="py-10 px-10 border-2 dark:border-gray-600 rounded-xl mt-5 dark:bg-gray-800">
       <h2 class="text-2xl dark:text-white">{{formState}} Website</h2>
-      <p class="dark:text-gray-400">You Can {{formState}} Website Here</p>
       <form [formGroup]="siteForm" (ngSubmit)="onSubmit()">
         <div class="flex flex-col mt-2">
           <label for="siteName" class="text-lg dark:text-gray-300">Website Name</label>
@@ -39,7 +38,7 @@
 
     <h2 class="text-5xl mt-5 mb-5 dark:text-white">Your Websites</h2>
     <!-- site list -->
-    <div class="grid grid-cols-3 gap-5 max-sm:grid-cols-1 max-md:grid-cols-2">
+    <div class="grid grid-cols-3 gap-5 max-sm:grid-cols-1 max-lg:grid-cols-2">
       @for (site of siteList; track $index) {
       <!-- site card -->
       <div class="border-2 dark:border-gray-600 rounded-xl shadow-lg mt-10 overflow-hidden dark:bg-gray-800">

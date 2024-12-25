@@ -1,0 +1,52 @@
+<div class="p-1 min-w-full dark:bg-gray-900 dark:text-white">
+  <section class="container mx-auto my-16">
+    <!-- header -->
+    <h2 class="text-5xl mt-5 mb-5 dark:text-white">Welcome To Your Password Manager</h2>
+    <p class="mb-5 text-2xl dark:text-gray-400">Your secure way to save and manage all your passwords!</p>
+    <h4 class="text-3xl mt-5 mb-5 dark:text-white">Create A New Account Then Sign In!</h4>
+
+    @if (isSuccess) {
+    <div class="mt-5 shadow-md px-5 py-3 rounded-xl bg-green-200 text-green-900 dark:bg-green-900 dark:text-green-300">
+      {{dataMsg}}
+    </div>
+    }
+
+    <!-- sign up form -->
+    <div class="py-10 px-10 border-2 dark:border-gray-600 rounded-xl mt-5 dark:bg-gray-800">
+      <h2 class="text-2xl dark:text-white">Sigun Up</h2>
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <div class="flex flex-col mt-2">
+          <label for="email" class="text-lg dark:text-gray-300">Email</label>
+          <input type="text" name="email" formControlName="email"
+            class="border-2 dark:border-gray-600 rounded-xl w-full p-2 dark:bg-gray-700 dark:text-gray-300">
+          @if (signupForm.get('email')?.touched && signupForm.get('email')?.invalid) {
+            @if (signupForm.get('email')?.errors?.['required']) {
+            <p class="text-red-700 dark:text-red-400">email is requierd</p>
+            }
+            @if (signupForm.get('email')?.errors?.['pattern']) {
+            <p class="text-red-700 dark:text-red-400">incorrect email form</p>
+            }
+          }
+        </div>
+        <div class="flex flex-col mt-2">
+          <label for="password" class="text-lg dark:text-gray-300">Password</label>
+          <input type="password" name="password" formControlName="password"
+            class="border-2 dark:border-gray-600 rounded-xl w-full p-2 dark:bg-gray-700 dark:text-gray-300">
+            @if (signupForm.get('password')?.touched && signupForm.get('password')?.invalid) {
+              @if (signupForm.get('password')?.errors?.['required']) {
+              <p class="text-red-700 dark:text-red-400">password is requierd</p>
+              }
+              @if (signupForm.get('password')?.errors?.['pattern']) {
+              <p class="text-red-700 dark:text-red-400">password must be at least 8 characters and digits</p>
+              }
+            }
+        </div>
+        <button type="submit" [disabled]="signupForm.invalid"
+          class="disabled:bg-gray-900 text-white dark:disabled:bg-gray-700 dark:text-white shadow-md px-5 py-3 rounded-xl mt-5 mr-2 bg-gray-500 dark:bg-gray-500">
+          Sign Up</button>
+        <button type="button" (click)="resetForm()"
+          class="dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 border-2 shadow-md px-5 py-3 rounded-xl mt-5">Cancel</button>
+      </form>
+    </div>
+  </section>
+</div>

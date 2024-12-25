@@ -7,26 +7,37 @@ import {
   doc,
   updateDoc,
   deleteDoc,
+  where,
 } from '@angular/fire/firestore';
+import { AuthService } from './auth.service';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PasswordManagerService {
-  constructor(private firestore: Firestore) {}
+  constructor(private firestore: Firestore, private AuthService: AuthService) {}
 
-  // Add a new website to the database.
-  // @returns Promise<void> so the rest of the methods but getAllSites
-  addSite(data: object) {
-    const siteCollection = collection(this.firestore, 'sites');
-    return addDoc(siteCollection, data);
+  getLoggedUser() {
+    return window.localStorage.getItem('token');
   }
 
-  // Retrieve all websites from the database.
+  // Add a new website for a user to the database.
+  // @returns Promise<void> so the rest of the methods but getAllSites
+  addSite(data: object) {
+    const userId = this.getLoggedUser();
+    const siteCollection = collection(this.firestore, 'sites');
+    return addDoc(siteCollection, { ...data, userId });
+  }
+
+  // Retrieve all websites of a user from the database.
   // @returns Observable containing the list of sites
   getAllSites() {
+    const userId = this.getLoggedUser();
     const siteCollection = collection(this.firestore, 'sites');
-    return collectionData(siteCollection, { idField: 'id' });
+    return collectionData(siteCollection, { idField: 'id' }).pipe(
+      map((sites) => sites.filter((site: any) => site.userId === userId))
+    );
   }
 
   // Update a website in the database.
