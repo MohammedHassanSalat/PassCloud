@@ -21,10 +21,11 @@ export class NavbarComponent implements OnInit {
   showLogout!: boolean;
 
   // Set up subscription to monitor route changes.
-  // Hides logout button on the login page.
+  // Hides logout button on the login & sign up pages.
   ngOnInit(): void {
     this.Router.events.subscribe(() => {
-      this.showLogout = this.Router.url !== '/login';
+      this.showLogout =
+        this.Router.url !== '/login' && this.Router.url !== '/register';
     });
   }
 
