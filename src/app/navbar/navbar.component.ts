@@ -25,7 +25,7 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.Router.events.subscribe(() => {
       this.showLogout =
-        this.Router.url !== '/login' && this.Router.url !== '/register';
+        this.Router.url !== '/login' && this.Router.url !== '/register' && this.Router.url !== '/home';
     });
   }
 
@@ -40,7 +40,7 @@ export class NavbarComponent implements OnInit {
     this.AuthService.signOut().then(
       () => {
         window.localStorage.removeItem('token');
-        this.Router.navigate(['login']);
+        this.Router.navigate(['home']);
       },
       (err) => {
         console.error('Logout failed:', err.message);
