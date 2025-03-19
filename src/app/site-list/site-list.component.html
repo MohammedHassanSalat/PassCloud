@@ -1,7 +1,7 @@
 <div class="p-1 min-w-full dark:bg-gray-900 dark:text-white">
   <section class="container mx-auto my-16">
     <!-- header -->
-    <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
+    <div>
       <h1 class="text-5xl mt-5 mb-5 dark:text-white">Securely Save Your Websites Here!</h1>
       <p class="mb-5 text-2xl dark:text-gray-400">You Can Add New Websites From This Form</p>
       @if (isSuccess) {
@@ -12,8 +12,7 @@
       }
 
       <!-- Add site form -->
-      <div class="py-10 px-10 border-2 border-gray-900 dark:border-gray-600 rounded-xl mt-5 dark:bg-gray-800"
-        data-aos="fade-right" data-aos-duration="1000" data-aos-delay="1500">
+      <div class="py-10 px-10 border-2 border-gray-900 dark:border-gray-600 rounded-xl mt-5 dark:bg-gray-800">
         <h2 class="text-2xl dark:text-white">{{formState}} Website</h2>
         <form [formGroup]="siteForm" (ngSubmit)="onSubmit()">
           <div class="flex flex-col mt-2">
@@ -41,13 +40,13 @@
       </div>
     </div>
 
-    <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
+    <div>
       <h2 class="text-5xl mt-5 mb-5 dark:text-white">Your Websites</h2>
       <!-- site list -->
       <div class="grid grid-cols-3 gap-5 max-sm:grid-cols-1 max-lg:grid-cols-2">
         @for (site of siteList; track $index) {
         <!-- site card -->
-        <div data-aos="zoom-in" data-aos-duration="800" data-aos-delay="800"
+        <div
           class="border-2 border-gray-900 dark:border-gray-600 rounded-xl shadow-lg mt-10 overflow-hidden dark:bg-gray-800">
           <div class="aspect-video">
             <img class="w-full h-full object-cover" [src]="site.siteImageURL" [alt]="site.siteName">

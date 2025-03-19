@@ -1,7 +1,12 @@
-<div class="bg-white dark:bg-gray-900">
-
+<div class="relative min-h-screen">
+  @if(DarkmodeService.theme() == 'dark') {
+  <ngx-particles class="absolute inset-0 z-0" [id]="id" [options]="particlesOptionsDark"></ngx-particles>
+  }
+  @else {
+  <ngx-particles class="absolute inset-0 z-0" [id]="id" [options]="particlesOptionsLight"></ngx-particles>
+  }
   <section data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
-    <div class="mx-auto text-center">
+    <div class="mx-auto text-center py-12">
       <div class="flex items-center justify-center w-full px-6 py-8 lg:h-[32rem] lg:w-2/3 mx-auto">
         <div>
           <h2 class="text-3xl font-semibold text-gray-800 dark:text-white lg:text-5xl">
